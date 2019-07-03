@@ -8,7 +8,7 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 
 @SuppressWarnings("serial")
-@TableName("tb_itme")
+@TableName("tb_item")
 @Data
 @Accessors(chain = true)
 public class Item extends BasePOJO{
