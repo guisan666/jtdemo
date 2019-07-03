@@ -23,10 +23,6 @@ public class ItemController {
 		return itemService.findItemByPages(page,rows);
 	}
 
-	@RequestMapping("/cat/queryItemName")
-	public String queryItemName(){
-		return null;
-	}
 
 
 
