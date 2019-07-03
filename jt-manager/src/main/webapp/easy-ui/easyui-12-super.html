@@ -20,7 +20,7 @@
 		//展现树形结构
 		$("#easyui-tree").tree({
 			url:"tree.json",		//加载远程JSON数据
-			method:"POST",			//请求方式  POST
+			method:"get",			//请求方式  get
 			animate:true,			//表示显示折叠端口
 			checkbox:true,			//表述复选框
 			lines:true,				//表示显示连接线
@@ -66,7 +66,7 @@
 			//加载同学录树形结构
 			$("#txlTree").tree({
 				url:"friend.json",		//加载远程JSON数据
-				method:"POST",			//请求方式  POST
+				method:"get",			//请求方式  POST
 				animate:true,			//表示显示折叠端口
 				checkbox:true,			//表述复选框
 				lines:true,				//表示显示连接线
