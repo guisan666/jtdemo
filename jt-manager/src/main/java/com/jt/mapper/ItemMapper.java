@@ -20,4 +20,14 @@ public interface ItemMapper extends BaseMapper<Item>{
      */
     @Select("select * from tb_item order by updated desc limit #{start},#{rows}")
     List<Item> findItemPages(@Param("start") Integer start, @Param("rows") Integer rows);
+
+    /**
+     * mybatis传参问题
+     * 规则:mybatis中默认不允许多值传参
+     *
+     * @param ids
+     */
+    void deleteItems(Long[] ids);
+
+    void updateStatus(@Param("ids")Long[] ids,@Param("status")Integer status);
 }
