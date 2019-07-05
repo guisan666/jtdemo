@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 
-@RestControllerAdvice   //针对controller层生效
+//@RestControllerAdvice   //针对controller层生效
 @Slf4j
 public class SysResultAspect {
     /**

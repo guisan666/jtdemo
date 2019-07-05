@@ -47,10 +47,13 @@ public class ItemServiceImpl implements ItemService {
 
 	@Transactional
 	@Override
-	public void updateItem(Item item) {
+	public void updateItem(Item item,ItemDesc itemDesc) {
 		//Item i = itemMapper.selectById(item.getId());
 		item.setUpdated(new Date());
+		itemDesc.setUpdated(new Date());
 		itemMapper.updateById(item);
+		itemDesc.setItemId(item.getId());
+        itemDescMapper.updateById(itemDesc);  //修改商品描述
 	}
 
 	@Transactional
@@ -60,6 +63,7 @@ public class ItemServiceImpl implements ItemService {
 		//itemMapper.deleteItems(ids);
 		List<Long> idList = Arrays.asList(ids);
 		itemMapper.deleteBatchIds(idList);
+		itemDescMapper.deleteBatchIds(idList);  //删除商品描述
 	}
 
 	@Override
