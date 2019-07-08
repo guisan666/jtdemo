@@ -1,6 +1,8 @@
 package com.jt.service;
 
 import com.jt.vo.EasyUI_Image;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -12,9 +14,13 @@ import java.util.Date;
 import java.util.UUID;
 
 @Service
+@PropertySource("classpath:/properties/image.properties")
 public class FileServiceImpl implements FileService {
 
+    @Value("${image.localDirPath}")
     private String localDirPath = "E:/images/";
+    @Value("${image.urlDirPath}")
+    private String urlDirPath;
 
     /**
      * 文件上传思路
@@ -50,7 +56,7 @@ public class FileServiceImpl implements FileService {
             //封装图片属性
             image.setHeight(height).setWidth(width);
             //以时间格式创建文件夹保存数据
-            String datePathDirs = new SimpleDateFormat("yyyy/MM/dd").format(new Date());
+            String datePathDirs = new SimpleDateFormat("yyyy/MM/dd/").format(new Date());
             String realDirPath = localDirPath + datePathDirs;
             File dirFile = new File(realDirPath);
             if (!dirFile.exists()){
@@ -60,6 +66,12 @@ public class FileServiceImpl implements FileService {
             String uuid = UUID.randomUUID().toString().replace("-","");
             String fileType = fileName.substring(fileName.lastIndexOf("."));
             String realName = uuid + fileType;
+            File uFile = new File(realDirPath + realName);
+            file.transferTo(uFile);
+
+            //虚拟lujing
+            String realUrlPath = urlDirPath + "/" + datePathDirs + "/" + realName;
+            image.setUrl(realUrlPath);
 
         }catch (Exception e){
             e.printStackTrace();
