@@ -20,4 +20,10 @@ public class IndexController {
 		return item;
 	}
 
+	@RequestMapping("/getMsg")
+	@ResponseBody
+	public String getMsg(){
+		return "我是8093服务器";
+	}
+
 }

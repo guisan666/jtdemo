@@ -3,7 +3,6 @@ package com.jt.aspect;
 import com.jt.vo.SysResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 
 //@RestControllerAdvice   //针对controller层生效

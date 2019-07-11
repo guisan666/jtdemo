@@ -3,9 +3,13 @@ package com.jt.service;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.jt.mapper.ItemCatMapper;
 import com.jt.pojo.ItemCat;
+import com.jt.util.ObjectMapperUtil;
+import com.jt.vo.EasyUI_Image;
 import com.jt.vo.EasyUI_Tree;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+import redis.clients.jedis.Jedis;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +19,8 @@ public class ItemCatServiceImpl implements ItemCatService {
 
     @Autowired
     private ItemCatMapper itemCatMapper;
+    @Autowired
+    private Jedis jedis;
 
     @Override
     public String findItemCatNameById(Long itemCatId) {
@@ -44,5 +50,22 @@ public class ItemCatServiceImpl implements ItemCatService {
         QueryWrapper<ItemCat> wrapper = new QueryWrapper<>();
         wrapper.eq("parent_id",parentId);
         return itemCatMapper.selectList(wrapper);
+    }
+
+    @Override
+    public List<EasyUI_Tree> findItemCatByCache(Long parentId) {
+        List<EasyUI_Tree> treeList = new ArrayList<>();
+        String key = "ITEM_CAT_" + parentId;
+        String result = jedis.get(key);
+
+        if (StringUtils.isEmpty(result)){  //如果为空
+            treeList = findTree(parentId);
+            //将对象转化为json
+            String json = ObjectMapperUtil.toJSON(treeList);
+            jedis.set(key,json);
+        }else{  //缓存中有数据
+             treeList = ObjectMapperUtil.toObject(result, List.class);
+        }
+        return treeList;
     }
 }

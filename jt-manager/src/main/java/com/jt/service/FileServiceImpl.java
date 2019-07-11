@@ -69,7 +69,7 @@ public class FileServiceImpl implements FileService {
             File uFile = new File(realDirPath + realName);
             file.transferTo(uFile);
 
-            //虚拟lujing
+            //虚拟路径
             String realUrlPath = urlDirPath + "/" + datePathDirs + "/" + realName;
             image.setUrl(realUrlPath);
 
