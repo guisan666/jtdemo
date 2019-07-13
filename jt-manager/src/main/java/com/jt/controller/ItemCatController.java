@@ -1,6 +1,8 @@
 package com.jt.controller;
 
 
+import com.jt.anno.Cache_Find;
+import com.jt.enu.KEY_ENUM;
 import com.jt.service.ItemCatService;
 import com.jt.vo.EasyUI_Tree;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +25,9 @@ public class ItemCatController {
     }
 
     @RequestMapping("/list")
-    public List<EasyUI_Tree> findItemCatByParentId(@RequestParam(name="id" ,defaultValue = "0") Long parentId){
-        return itemCatService.findTree(parentId);
+    @Cache_Find(key="ITEM_CAT",keyType = KEY_ENUM.AUTO)
+    public List<EasyUI_Tree> findItemCatByCache(@RequestParam(name="id" ,defaultValue = "0") Long parentId){
+        return itemCatService.findItemCatByCache(parentId);
     }
 
 }

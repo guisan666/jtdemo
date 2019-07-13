@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisCluster;
+import redis.clients.jedis.ShardedJedis;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,8 +21,12 @@ public class ItemCatServiceImpl implements ItemCatService {
 
     @Autowired
     private ItemCatMapper itemCatMapper;
-    @Autowired
-    private Jedis jedis;
+
+    @Autowired          //分片redis
+    //private ShardedJedis jedis;
+    //@Autowired        //单台redis
+    //private Jedis jedis;
+    private JedisCluster jedis;  //哨兵
 
     @Override
     public String findItemCatNameById(Long itemCatId) {
@@ -59,12 +65,14 @@ public class ItemCatServiceImpl implements ItemCatService {
         String result = jedis.get(key);
 
         if (StringUtils.isEmpty(result)){  //如果为空
+            System.out.println("查询数据库..");
             treeList = findTree(parentId);
             //将对象转化为json
             String json = ObjectMapperUtil.toJSON(treeList);
             jedis.set(key,json);
         }else{  //缓存中有数据
-             treeList = ObjectMapperUtil.toObject(result, List.class);
+            System.out.println("查询缓存...");
+            treeList = ObjectMapperUtil.toObject(result, treeList.getClass());
         }
         return treeList;
     }
