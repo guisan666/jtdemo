@@ -2,6 +2,8 @@ package com.jt.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.jt.anno.Cache_update;
+import com.jt.enu.KEY_ENUM;
 import com.jt.mapper.ItemDescMapper;
 import com.jt.pojo.Item;
 import com.jt.pojo.ItemDesc;
@@ -46,6 +48,7 @@ public class ItemServiceImpl implements ItemService {
 	}
 
 	@Transactional
+	@Cache_update(key = "ITEM",keyType = KEY_ENUM.AUTO)
 	@Override
 	public void updateItem(Item item,ItemDesc itemDesc) {
 		//Item i = itemMapper.selectById(item.getId());
@@ -80,5 +83,10 @@ public class ItemServiceImpl implements ItemService {
         List<Long> longList = Arrays.asList(ids);
         wrapper.in("id",longList);
         itemMapper.update(item,wrapper);
+	}
+
+	@Override
+	public Item findItemById(Long id) {
+		return itemMapper.selectById(id);
 	}
 }

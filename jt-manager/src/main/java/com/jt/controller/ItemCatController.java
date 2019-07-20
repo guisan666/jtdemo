@@ -27,7 +27,8 @@ public class ItemCatController {
     @RequestMapping("/list")
     @Cache_Find(key="ITEM_CAT",keyType = KEY_ENUM.AUTO)
     public List<EasyUI_Tree> findItemCatByCache(@RequestParam(name="id" ,defaultValue = "0") Long parentId){
-        return itemCatService.findItemCatByCache(parentId);
+        return itemCatService.findTree(parentId);
+        //return itemCatService.findItemCatByCache(parentId);
     }
 
 }

@@ -3,10 +3,7 @@ package com.jt.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.*;
 import redis.clients.jedis.*;
 
 import java.util.ArrayList;
@@ -19,6 +16,7 @@ import java.util.Set;
  */
 @Configuration    //标识当前类是一个配置类
 @PropertySource("classpath:/properties/redis.properties")
+@Lazy
 public class RedisConfig {
 
     /*

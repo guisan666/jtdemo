@@ -15,4 +15,8 @@ public interface ItemService {
     void deleteItems(Long[] ids);
 
     void updateStatus(Long[] ids , Integer status);
+
+    Item findItemById(Long id);
+
+
 }

@@ -20,7 +20,8 @@ import redis.clients.jedis.JedisCluster;
 @Aspect   //标识切面
 public class SysRedisAspect {
 
-    @Autowired
+    //当spring容器启动时不会立即注入对象
+    @Autowired(required = false)
     private JedisCluster jedis;
 
     @Around("@annotation(cache_find)")
@@ -34,19 +35,16 @@ public class SysRedisAspect {
             if (StringUtils.isEmpty(result)){
                 //如果结果为null,则表示缓存中没有数据
                 //查询数据库
-                //data = joinPoint.proceed();   //表示业务方法执行
-                data = joinPoint.proceed();
+                data = joinPoint.proceed();   //表示业务方法执行
                 //将数据转换为json字符串
                 String json = ObjectMapperUtil.toJSON(data);
                 //判断用户是否设定超时时间
                 if(cache_find.secondes() == 0){
-                    //表示不要超时
                     jedis.set(key,json);
                 }else{
                     jedis.setex(key,cache_find.secondes(),json);
                 }
                 System.out.println("查询数据库!!!!");
-
             }else {
                 Class tagetClass = getClass(joinPoint);
                 //如果缓存中有数据,则将数据转换为对象
@@ -71,9 +69,10 @@ public class SysRedisAspect {
             return cache_find.key();
         }
         //表示用户的key需要拼接  key+"_" + 第一个参数
+        String method = joinPoint.getSignature().getName();
         String strArgs = String.valueOf(joinPoint.getArgs()[0]);
-        String key = cache_find.key() + "_" + strArgs;
-        return key;
+        //String key = cache_find.key() + "_" + strArgs;
+        return method + "::" + strArgs;
     }
 
     /**
