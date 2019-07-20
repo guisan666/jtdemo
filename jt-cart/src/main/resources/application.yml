@@ -28,7 +28,7 @@ dubbo:
   application:
     name: provider-cart  #定义服务名称
   registry:   #定义服务中心连接
-    address: zookeeper://192.168.21.130:2181?backup=192.168.21.130:2182,192.168.21.130:2183
+    address: zookeeper://47.107.177.211:2181?backup=47.107.177.211:2182,47.107.177.211:2183
   protocol:
     name: dubbo
     port: 20881
