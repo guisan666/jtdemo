@@ -1,11 +1,9 @@
 package com.jt.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
-import com.baomidou.mybatisplus.generator.config.IFileCreate;
 import com.jt.pojo.User;
 import com.jt.service.DubboUserService;
 import com.jt.vo.SysResult;
-import com.sun.corba.se.impl.oa.toa.TOA;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;

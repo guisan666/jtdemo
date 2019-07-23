@@ -49,6 +49,8 @@ public class CartController {
     @RequestMapping("/update/num/{itemId}/{num}")
     @ResponseBody
     public SysResult updateCartNum(Cart cart){
+        Long userId = UserThreadLocal.get().getId();
+        cart.setUserId(userId);
         dubboCartService.updateCartNum(cart);
         return SysResult.success();
     }

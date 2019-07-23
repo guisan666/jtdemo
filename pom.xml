@@ -9,6 +9,7 @@
         <module>jt-webb</module>
         <module>jt-sso</module>
         <module>jt-cart</module>
+        <module>jt-order</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

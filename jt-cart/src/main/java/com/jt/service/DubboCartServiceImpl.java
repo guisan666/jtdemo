@@ -55,6 +55,7 @@ public class DubboCartServiceImpl implements DubboCartService {
     public void updateCartNum(Cart cart) {
         Cart cartTemp = new Cart();
         cartTemp.setNum(cart.getNum()).setUpdated(new Date());
+        System.out.println(cart);
         QueryWrapper<Cart> wrapper = new QueryWrapper<>();
         wrapper.eq("user_id",cart.getUserId()).eq("item_id",cart.getItemId());
         cartMapper.update(cartTemp,wrapper);
